@@ -22,15 +22,16 @@ export class TarefaController {
     }
 
     criar(req: Request, res: Response): void {
-        const dados: CriarTarefaDTO = req.body;
-        
-        if (!dados.titulo) {
-            res.status(400).json({ erro: 'O título é obrigatório' });
-            return;
-        }
+        try {
+            const tarefa = this.tarefaService.criar(req.body);
 
-        const novaTarefa = this.tarefaService.criar(dados);
-        res.status(201).json(novaTarefa);
+            res.status(201).json(tarefa);
+
+        } catch (error) {
+            res.status(400).json({
+                erro: (error as Error).message
+            });
+        }
     }
 
     atualizar(req: Request, res: Response): void {

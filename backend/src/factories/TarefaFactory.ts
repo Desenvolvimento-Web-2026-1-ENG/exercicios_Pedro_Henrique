@@ -1,13 +1,15 @@
 import { TarefaController } from '@interfaces/controllers/TarefaController';
 import { TarefaService } from '@services/TarefaService';
-import { TarefaRepositoryInMemory } from '@infrastructure/database/TarefaRepositoryInMemory';
+import { tarefaRepositoryInMemory } from '@infrastructure/database/TarefaRepositoryInMemory';
+import { categoriaRepositoryInMemory } from '@infrastructure/database/CategoriaRepositoryInMemory';
 
 export class TarefaFactory {
     static criarController(): TarefaController {
-        const repository = new TarefaRepositoryInMemory();
-        const service = new TarefaService(repository);
-        const controller = new TarefaController(service);
-        
-        return controller;
+        const service = new TarefaService(
+            tarefaRepositoryInMemory,      
+            categoriaRepositoryInMemory   
+        );
+
+        return new TarefaController(service);
     }
 }

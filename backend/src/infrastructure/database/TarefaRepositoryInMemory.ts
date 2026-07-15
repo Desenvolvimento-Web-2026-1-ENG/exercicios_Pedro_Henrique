@@ -13,6 +13,10 @@ export class TarefaRepositoryInMemory implements ITarefaRepository {
         return this.tarefas.find(t => t.id === id);
     }
 
+    buscarPorCategoria(categoriaId: number): Tarefa[] {
+        return this.tarefas.filter(t => t.categoriaId === categoriaId);
+    }
+
     criar(dados: Omit<Tarefa, 'id'>): Tarefa {
         const novaTarefa: Tarefa = {
             id: this.proximoId++,
@@ -36,3 +40,5 @@ export class TarefaRepositoryInMemory implements ITarefaRepository {
         return this.tarefas.length < tamanhoInicial;
     }
 }
+
+export const tarefaRepositoryInMemory = new TarefaRepositoryInMemory();
